@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<title>Insert title here</title>
+<style type="text/css">
+	*{margin: 0; padding: 0; -webkit-text-size-adjust:none; }
+	body {font-size:12px; font-family:dotum;}
+	canvas {display:block;background:#e6e6e6;}
+	#wrapper {position:relative; width:100%;}
+	
+	/* myBoard Area */
+	#wrapperRight {position:relative;}
+	#wrapperRight .wrap_user_board {border:1px solid black; overflow:hidden; width:280px; padding:7px; margin:0 auto;}
+	#wrapperRight .wrap_user_board .left, #wrapperRight .wrap_user_board .right {float:left;} 
+	#wrapperRight .wrap_user_board .right {width:80px;}
+	#wrapperRight #holdStateViewElement {text-align:right; width:60px; float:left;}
+	.div_next, .div_hold {width:60px; height:130px; border:1px solid black;}
+	.div_hold {height:55px;}
+	.div_next canvas{display:inline-block; margin-bottom:5px; background:#fff;}
+	.div_hold canvas{display:inline-block; background:#fff;}
+	#div_count {position:absolute; width:50px; text-align:center;}
+	.div_config {font-size:11px; line-height:1; padding-left:3px;}
+	.div_config input {width:13px; height:13px; margin:2px 0 0;}
+	
+	/* key */
+	#leftKey, #rightKey, #upKey, #downKey {width:15px; text-align:center;}
+	#leftKey, #rightKey {width:17px;}
+	#dropKey, #holdKey {width:35px; text-align:center;}
+</style>
+<script type="text/javascript" src="util.js"></script>
+<script type="text/javascript" src="constant_val.js"></script>
+<script type="text/javascript" src="Game.js"></script>
+<script type="text/javascript" src="Block.js"></script>
+<script type="text/javascript" src="Board.js"></script>
+<script type="text/javascript">
+		
+	window.onload = function(){
+			Game.createUserGame({
+				canvas: {
+					gameBoardCanvas: new Canvas(util.$('gameCanvas')),
+					holdBlockBoardCanvas: new Canvas(util.$('holdBlockCanvas'))
+				},
+				nextBlockBoard : {
+					wrapper : util.$('nextBlockBoardWrapper'),
+					length : 4
+				},
+				dom : {
+					holdStateViewer: util.$('holdStateViewElement'),
+					btnArea : util.$('btnArea'),
+					levelViewer : util.$('gameLevel'),
+					removedLineViewer : util.$('removedLine')
+				},
+				config : {
+					pageType : "mobile"
+				}
+			});		
+	}
+
+	
+	function changeDumAble(checkBox){
+		Game.myBoard.setDumAble(checkBox.checked);
+	}
+	
+</script>
+<script type="text/javascript">
+/**
+ * @author twidddj
+ */				
+	function Canvas(el){
+		this.el     = el;
+		this.ctx    = el.getContext("2d");
+	}
+
+</script>
+</head>
+<body>
+<div id="wrapper" class="clear" style="overflow:hidden;">
+	<!-- myBoard Area -->
+	<div id="wrapperRight">
+		<div class="wrap_user_board">
+			<div class="left">
+				<canvas id="gameCanvas"></canvas>
+			</div>
+			<div class="right">
+				<div class="div_next" id="nextBlockBoardWrapper">
+					next
+				</div>
+				<div class="div_hold">
+					hold
+					<canvas id="holdBlockCanvas"></canvas>
+					<p id="holdStateViewElement"></p>
+				</div>
+				<div class="div_config">
+					<input type="checkbox" onclick="changeDumAble(this);" /> Off the shadow
+				</div>
+				<div id="btnArea" style="margin-top:10px;">
+				</div>
+				<div style="margin-top:10px;">
+				    <strong id="gameLevel"></strong><br /> 
+					<strong id="removedLine"></strong>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- //myBoard Area -->
+	
+	<dl style="width:296px; margin:0 auto; margin-top:10px;">
+		<dt><strong>Usage</strong></dt>
+		<dd style="margin-top:3px;">
+			← ↓ → : move <br />
+			↑ : rotate<br />
+			space bar : drop <br />
+			shift : hold 
+		</dd>
+	</dl>
+
+</div>	
+</body>
+</html>
